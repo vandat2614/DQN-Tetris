@@ -124,7 +124,7 @@ def train(env, model, config, device):
             reg_steps = num_steps
 
             date_hour = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}"
+            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps: {num_steps}"
             
             print(log_message)
             with open(log_path, 'a') as file:
