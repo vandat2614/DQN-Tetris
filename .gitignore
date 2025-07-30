@@ -3,3 +3,5 @@ venv/
 tempCodeRunnerFile.py
 *.pyc
 __pycache__/
+
+dev.py
