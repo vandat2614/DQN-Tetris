@@ -3,11 +3,11 @@ env:
   params:
     state_format: features
     action_type: simple
-    max_steps: 30000
+    max_steps: 15000
 
 model:
-  hidden_sizes: [512]
-  hidden_activations: [ReLU]
+  hidden_sizes: [512, 512]
+  hidden_activations: [ReLU, ReLU]
   output_activation: null
 
 train:
@@ -15,10 +15,10 @@ train:
   num_episodes: 100000
   gamma: 0.99
   epsilon_max: 1.0
-  epsilon_min: 0.001
+  epsilon_min: 0.01
   epsilon_decay: 0.999
   learning_rate: 0.0001
   memory_size: 100000
   batch_size: 32
   target_network: True
-  target_update_freq: 25
+  target_update_freq: 20

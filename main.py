@@ -3,7 +3,7 @@ import yaml
 import torch
 
 
-from src import train, NeuralNetwork, Tetris
+from src import train, test, NeuralNetwork, Tetris
 
 def parse_args():
     parser = argparse.ArgumentParser(description='DQN Training, Evaluate, and Testing')
@@ -39,8 +39,8 @@ def main():
 
     if args.mode == 'train':
         train(env, model, config['train'], device)
-    # elif args.mode == 'test':
-    #     test(env, model, device)
+    elif args.mode == 'test':
+        test(env, model, device)
     # elif args.mode == 'eval':
     #     evaluate(env, model, config['evaluate'], device)
 
