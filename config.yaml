@@ -12,12 +12,12 @@ model:
 
 train:
   base_dir: "runs"
-  num_episodes: 100000
+  num_episodes: 10000
   gamma: 0.99
   epsilon_max: 1.0
   epsilon_min: 0.01
-  epsilon_decay: 0.999
-  learning_rate: 0.0001
+  epsilon_decay: 0.9999
+  learning_rate: 0.00001
   memory_size: 100000
   batch_size: 32
   target_network: True

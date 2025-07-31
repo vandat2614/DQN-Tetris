@@ -113,6 +113,8 @@ def train(env, model, config, device):
             "epsilon": epsilon
         })
 
+        torch.save(model.state_dict(), f'{weights_dir}/last.pt')
+
         if config['target_network'] and (episode + 1) % target_update_freq == 0:
             target_network.load_state_dict(model.state_dict())
         
