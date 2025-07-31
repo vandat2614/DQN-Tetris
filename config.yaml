@@ -2,7 +2,7 @@ env:
   id: TetrisA-v0
   params:
     state_format: features
-    action_type: simple
+    action_type: full
     max_steps: 15000
 
 model:
