@@ -69,7 +69,7 @@ def train(env, model, config, device):
     epsilon = epsilon_max
     best_score = float('-inf')
     best_reward = float('-inf')
-    reg_steps = float('inf')
+    reg_clear = float('-inf')
 
     train_log = []
 
@@ -120,13 +120,13 @@ def train(env, model, config, device):
         
         if score > best_score or \
             (score == best_score and total_reward > best_reward) or  \
-            (score == best_score and total_reward == best_reward and num_steps < reg_steps):
+            (score == best_score and total_reward == best_reward and info['number_of_lines'] > reg_clear):
             best_score = score
             best_reward = total_reward
-            reg_steps = num_steps
+            reg_clear = info['number_of_lines']
 
             date_hour = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps: {num_steps}"
+            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps {num_steps}, clear {info['number_of_lines']}"
             
             print(log_message)
             with open(log_path, 'a') as file:

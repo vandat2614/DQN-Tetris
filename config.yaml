@@ -3,7 +3,7 @@ env:
   params:
     state_format: features
     action_type: full
-    max_steps: 15000
+    max_steps: 30000
 
 model:
   hidden_sizes: [512, 512]
