@@ -4,7 +4,7 @@ def test(env, model, device):
     model = model.to(device)
     model.eval()
 
-    state = env.reset()
+    state, _ = env.reset()
     while True:
 
         state_tensor = torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(device)

@@ -6,14 +6,14 @@ from .game import Game
 from .colors import Colors
 
 # Action constants
-NOOP   = 0
-LEFT   = 1
-RIGHT  = 2
-DOWN   = 3
-ROTATE = 4
+# NOOP   = 0
+LEFT   = 0
+RIGHT  = 1
+DOWN   = 2
+ROTATE = 3
 
 ACTIONS = {
-    NOOP:   "NOOP",
+    # NOOP:   "NOOP",
     LEFT:   "LEFT",
     RIGHT:  "RIGHT",
     DOWN:   "DOWN",
