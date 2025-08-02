@@ -70,24 +70,29 @@ class TetrisEnv(gym.Env):
         assert self.action_space.contains(action)
 
         lines_cleared = 0
+        success = True
 
         if not self.game.game_over:
             if action == LEFT:
-                self.game.move_left()
+                success = self.game.move_left()
             elif action == RIGHT:
-                self.game.move_right()
+                success = self.game.move_right()
             elif action == DOWN:
                 lines_cleared = self.game.move_down()
                 self.game.update_score(0, 1)
             elif action == ROTATE:
-                self.game.rotate()
+                success = self.game.rotate()
 
         observation = self._get_obs(lines_cleared)
         
+        
         reward = 1
-        reward += [0, 40, 100, 300, 1200][lines_cleared]
+        reward += [0, 2, 5, 10, 12][lines_cleared]
         if self.game.game_over:
             reward -= 5
+
+        if not success:
+            reward -= 3
 
         terminated = self.game.game_over
         truncated = False

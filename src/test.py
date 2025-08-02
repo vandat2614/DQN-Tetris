@@ -12,6 +12,8 @@ def test(env, model, device):
             q_values = model(state_tensor)
             action = q_values.argmax().item()
 
+        print(action)
+
         next_state, reward, terminated, truncated, info = env.step(action)
         state = next_state
 

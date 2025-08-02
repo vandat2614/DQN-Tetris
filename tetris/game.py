@@ -42,11 +42,15 @@ class Game:
 		self.current_block.move(0, -1)
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(0, 1)
+			return False
+		return True
 
 	def move_right(self):
 		self.current_block.move(0, 1)
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.move(0, -1)
+			return False
+		return True
 
 	def move_down(self):
 		self.current_block.move(1, 0)
@@ -97,8 +101,10 @@ class Game:
 		self.current_block.rotate()
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.undo_rotation()
+			return False
 		elif self.sound:
 			self.rotate_sound.play()
+		return True
 
 	def block_inside(self):
 		tiles = self.current_block.get_cell_positions()
