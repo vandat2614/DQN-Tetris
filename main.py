@@ -45,8 +45,8 @@ def main():
 
     if args.mode == 'train':
         train(env, model, config['train'], device)
-    # elif args.mode == 'test':
-    #     test(env, model, device)
+    elif args.mode == 'test':
+        test(env, model, device)
     # elif args.mode == 'eval':
     #     evaluate(env, model, config['evaluate'], device)
 

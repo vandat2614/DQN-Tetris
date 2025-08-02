@@ -3,13 +3,13 @@ env:
     state_format: discrete
 
 model:
-  hidden_sizes: [64, 64, 64]
+  hidden_sizes: [256, 256, 256]
   hidden_activations: [ReLU, ReLU, ReLU]
   output_activation: null
 
 train:
   base_dir: "runs"
-  num_episodes: 1000
+  num_episodes: 10000
   gamma: 0.99
   epsilon_max: 1.0
   epsilon_min: 0.01
