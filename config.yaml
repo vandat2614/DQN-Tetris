@@ -9,7 +9,7 @@ model:
 
 train:
   base_dir: "runs"
-  num_episodes: 10000
+  num_episodes: 5000
   gamma: 0.99
   epsilon_max: 1.0
   epsilon_min: 0.01
