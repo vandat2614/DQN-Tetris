@@ -71,6 +71,7 @@ class TetrisEnv(gym.Env):
 
         lines_cleared = 0
         success = True
+        reward = 0.1
 
         if not self.game.game_over:
             if action == LEFT:
@@ -81,18 +82,17 @@ class TetrisEnv(gym.Env):
                 lines_cleared = self.game.move_down()
                 self.game.update_score(0, 1)
             elif action == ROTATE:
+                reward -= 1
                 success = self.game.rotate()
 
         observation = self._get_obs(lines_cleared)
         
-        
-        reward = 1
         reward += [0, 2, 5, 10, 12][lines_cleared]
         if self.game.game_over:
-            reward -= 5
+            reward -= 10
 
         if not success:
-            reward -= 3
+            reward -= 5
 
         terminated = self.game.game_over
         truncated = False

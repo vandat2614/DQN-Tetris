@@ -98,13 +98,20 @@ class Game:
 		return True
 
 	def rotate(self):
+		old_tiles = self.current_block.get_cell_positions()
 		self.current_block.rotate()
 		if self.block_inside() == False or self.block_fits() == False:
 			self.current_block.undo_rotation()
 			return False
 		elif self.sound:
 			self.rotate_sound.play()
-		return True
+
+		change = False
+		new_tiles = self.current_block.get_cell_positions()
+		for i in range(len(old_tiles)):
+			if (old_tiles[i].row != new_tiles[i].row) or (old_tiles[i].column != new_tiles[i].column):
+				change = True 
+		return change
 
 	def block_inside(self):
 		tiles = self.current_block.get_cell_positions()

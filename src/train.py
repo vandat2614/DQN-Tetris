@@ -78,6 +78,7 @@ def train(env, model, config, device):
         epsilon = max(epsilon * epsilon_decay, epsilon_min)
         loss = None
         num_steps = 0
+        cleared = 0
 
         while True:
 
@@ -95,6 +96,7 @@ def train(env, model, config, device):
 
             total_reward += reward
             num_steps += 1
+            cleared += info['lines_cleared']
             state = next_state
 
             if len(memory) >= batch_size:
@@ -122,7 +124,7 @@ def train(env, model, config, device):
             best_score = score
 
             date_hour = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward}, score {score}, steps {num_steps}, clear {info['lines_cleared']}"
+            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps {num_steps}, clear {cleared}"
             
             print(log_message)
             with open(log_path, 'a') as file:
