@@ -71,7 +71,7 @@ class TetrisEnv(gym.Env):
 
         lines_cleared = 0
         success = True
-        reward = 0.1
+        reward = 0
 
         if not self.game.game_over:
             if action == LEFT:
@@ -87,7 +87,7 @@ class TetrisEnv(gym.Env):
 
         observation = self._get_obs(lines_cleared)
         
-        reward += [0, 2, 5, 10, 12][lines_cleared]
+        reward += [0, 10, 20, 50, 100][lines_cleared]
         if self.game.game_over:
             reward -= 10
 

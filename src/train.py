@@ -68,6 +68,7 @@ def train(env, model, config, device):
 
     epsilon = epsilon_max
     best_score = float('-inf')
+    best_reward = float('-inf')
 
     train_log = []
 
@@ -120,8 +121,8 @@ def train(env, model, config, device):
         if config['target_network'] and (episode + 1) % target_update_freq == 0:
             target_network.load_state_dict(model.state_dict())
         
-        if (score > best_score):
-            best_score = score
+        if (total_reward > best_reward):
+            best_reward = total_reward
 
             date_hour = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps {num_steps}, clear {cleared}"
