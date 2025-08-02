@@ -1,23 +1,20 @@
 env:
-  id: TetrisA-v0
   params:
-    state_format: features
-    action_type: full
-    max_steps: 30000
+    state_format: discrete
 
 model:
-  hidden_sizes: [512, 512]
-  hidden_activations: [ReLU, ReLU]
+  hidden_sizes: [64, 64, 64]
+  hidden_activations: [ReLU, ReLU, ReLU]
   output_activation: null
 
 train:
   base_dir: "runs"
-  num_episodes: 10000
+  num_episodes: 1000
   gamma: 0.99
   epsilon_max: 1.0
   epsilon_min: 0.01
   epsilon_decay: 0.9999
-  learning_rate: 0.00001
+  learning_rate: 0.0001
   memory_size: 100000
   batch_size: 32
   target_network: True

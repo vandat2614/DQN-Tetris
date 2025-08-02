@@ -3,7 +3,8 @@ import yaml
 import torch
 
 
-from src import train, test, NeuralNetwork, Tetris
+from src import train, test, NeuralNetwork
+from tetris import TetrisEnv
 
 def parse_args():
     parser = argparse.ArgumentParser(description='DQN Training, Evaluate, and Testing')
@@ -21,15 +22,20 @@ def setup(config_path : str, weights_path : str = None):
  
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    env = Tetris(config['env']['id'], **config['env']['params'])
+    if weights_path is not None:
+        config['env']['params']['sound'] = True
+        config['env']['params']['render_mode'] = 'human'
+    else:
+        config['env']['params']['render_mode'] = 'rgb_array'
 
-
+    env = TetrisEnv(**config['env']['params'])
     model = NeuralNetwork.from_config(config=config['model'], 
                                       input_size=env.observation_space.shape[0],
                                       output_size=env.action_space.n)
 
     if weights_path is not None:
         model.load(path=weights_path)
+
 
     return env, model, config, device
 
@@ -39,8 +45,8 @@ def main():
 
     if args.mode == 'train':
         train(env, model, config['train'], device)
-    elif args.mode == 'test':
-        test(env, model, device)
+    # elif args.mode == 'test':
+    #     test(env, model, device)
     # elif args.mode == 'eval':
     #     evaluate(env, model, config['evaluate'], device)
 

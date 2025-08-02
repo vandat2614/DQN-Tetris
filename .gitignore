@@ -1,4 +1,5 @@
 venv/
+runs/
 
 tempCodeRunnerFile.py
 *.pyc

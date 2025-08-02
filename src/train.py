@@ -68,20 +68,19 @@ def train(env, model, config, device):
 
     epsilon = epsilon_max
     best_score = float('-inf')
-    best_reward = float('-inf')
-    reg_clear = float('-inf')
 
     train_log = []
 
     episode_iter = itertools.count() if num_episodes is None else range(num_episodes)
     for episode in episode_iter:
-        state = env.reset()
+        state, _ = env.reset()
         total_reward = 0
         epsilon = max(epsilon * epsilon_decay, epsilon_min)
         loss = None
         num_steps = 0
 
         while True:
+
             if random.random() < epsilon:
                 action = env.action_space.sample()
             else:
@@ -89,6 +88,7 @@ def train(env, model, config, device):
                     state_tensor = torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(device)
                     q_values = model(state_tensor)
                     action = q_values.argmax().item()
+
 
             next_state, reward, terminated, truncated, info = env.step(action)
             memory.push((state, action, reward, next_state, terminated))
@@ -118,21 +118,17 @@ def train(env, model, config, device):
         if config['target_network'] and (episode + 1) % target_update_freq == 0:
             target_network.load_state_dict(model.state_dict())
         
-        if score > best_score or \
-            (score == best_score and total_reward > best_reward) or  \
-            (score == best_score and total_reward == best_reward and info['number_of_lines'] > reg_clear):
+        if (score > best_score):
             best_score = score
-            best_reward = total_reward
-            reg_clear = info['number_of_lines']
 
             date_hour = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward:.2f}, score {score}, steps {num_steps}, clear {info['number_of_lines']}"
+            log_message = f"{date_hour}: New best record: episode {episode + 1}, reward {total_reward}, score {score}, steps {num_steps}, clear {info['lines_cleared']}"
             
             print(log_message)
             with open(log_path, 'a') as file:
                 file.write(log_message + '\n')
 
-            torch.save(model.state_dict(), f'{weights_dir}/best.pt')
+            torch.save(model.state_dict(), f'{weights_dir}/best_{episode+1}.pt')
 
     with open(train_log_path, "w") as file:
         json.dump(train_log, file, indent=4)
